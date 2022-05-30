@@ -23,10 +23,11 @@ public class _1202_v2 {
         int N = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
 
-        LinkedList<Jewel> jewels = new LinkedList<>();
+        //ArrayList, array 속도차이?
+        Jewel[] jewels = new Jewel[N];
         for (int i=0; i< N; i++){
             st = new StringTokenizer(br.readLine());
-            jewels.add(new Jewel(Integer.parseInt(st.nextToken()),  Integer.parseInt(st.nextToken())));
+            jewels[i] = new Jewel(Integer.parseInt(st.nextToken()),  Integer.parseInt(st.nextToken()));
         }
 
 
@@ -38,14 +39,13 @@ public class _1202_v2 {
 
         Arrays.sort(bags);
 
-        //보적 가치기준 내림차순. 비싼거 -> 싼거
-        Collections.sort(jewels, new Comparator<Jewel>() {
+        Arrays.sort(jewels, new Comparator<Jewel>() {
             @Override
             public int compare(Jewel o1, Jewel o2) {
-                if (o1.value == o2.value){//가치 같은 경우
-                    return (int) (o1.weight - o2.weight); //무게 오름차순
+                if (o1.weight == o2.weight){
+                    return (int) (o1.value - o2.value);
                 }else{
-                    return (int) (o2.value - o1.value); //가치 내림차순
+                    return (int) (o1.weight - o2.weight);
                 }
             }
         });
@@ -55,12 +55,8 @@ public class _1202_v2 {
         long answer = 0;
         int i=0; //i를 여기서 정의하면 while문 끝났을 때의 i부터 다시 시작됨. 먼저 탐색한 이후부터 이어서 탐색함.
         for (long bag : bags) { //무게 오름차순 가벼운거 -> 큰거
-            while (true){
-                if (i >= N) break;
-                Jewel jewel = jewels.get(i++);
-                if (jewel.weight <= bag){
-                    jewelsQueue.add(jewel.value);
-                }
+            while (i < N && jewels[i].weight <= bag){
+                jewelsQueue.add(jewels[i++].value);
             }
           //Queue의 맨 앞은 현재 가방에 넣을 수 있는 보석 중,  가장 가치가 큰 보석
             if (!jewelsQueue.isEmpty()){
