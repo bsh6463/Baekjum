@@ -56,13 +56,13 @@ public class _1700 {
 
                     //현재 꽂혀있는거
                     Integer using = outlet.get(i);
-                    int tmp = 0;
+                    int upcoming = 0;
                     int cnt = 0;
                     for (int j=m+1; j<arr.size(); j++){
                         if (arr.get(j).equals(using)){
                             cnt++;
 
-                            tmp = j;
+                            upcoming = j;
                             break;
                         }
                     }
@@ -71,8 +71,8 @@ public class _1700 {
                         removeIdx = i;
                         break;
                     }else{
-                        if (tmp > max){
-                            max = tmp;
+                        if (upcoming > max){
+                            max = upcoming;
                             removeIdx = i;
                         }
                     }
