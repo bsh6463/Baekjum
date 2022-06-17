@@ -40,6 +40,10 @@ public class _1700 {
                 continue;
             }
 
+            if (outlet.contains(gadget)){
+                continue;
+            }
+
             //꽉차있는데 안꽂혀 있는 경우.
             if (outlet.size() == n && !outlet.contains(gadget)){
 
@@ -47,58 +51,36 @@ public class _1700 {
                 //outlet을 확인하면서 queue에 있는지 확인.
 
                 int removeIdx = -1;
-                int maxUpcoming = -1;
-                int minCnt = k;
-
+                int max = -1;
                 for (int i=0; i<n; i++){
 
                     //현재 꽂혀있는거
                     Integer using = outlet.get(i);
-
-                    int upcomingIdx =-1; //-1이면 안나옴.
+                    int tmp = 0;
                     int cnt = 0;
-
-                    //다음에 안쓰이는애 찾기
                     for (int j=m+1; j<arr.size(); j++){
-
-                        if (using.equals(arr.get(j))){
+                        if (arr.get(j).equals(using)){
                             cnt++;
 
-                            if (cnt == 1){
-                                upcomingIdx = j;
-                            }
+                            tmp = j;
+                            break;
                         }
-
-
                     }
 
-                    //using은 이후에 등장하지 않음 빼버리자.
-                    if ( upcomingIdx == -1){
+                    if (cnt == 0){
                         removeIdx = i;
                         break;
-                    }
-
-                    // 등장은 하나 한참 나중에 나오는 경우
-                    if (upcomingIdx >= maxUpcoming){
-                        removeIdx = i;
-                        maxUpcoming = upcomingIdx;
-                        continue;
-                    }
-
-                    //곧 쓰임, 횟수 작은애를 빼자.
-                    if (minCnt >= cnt){
-                        removeIdx = i;
-                        minCnt = cnt;
-
+                    }else{
+                        if (tmp > max){
+                            max = tmp;
+                            removeIdx = i;
+                        }
                     }
 
                 }
-
-                System.out.println(removeIdx + ": " +outlet.get(removeIdx) + "->" +gadget);
                 outlet.remove(removeIdx);
                 outlet.add(removeIdx, gadget);
                 ans++;
-
 
             }
         }
