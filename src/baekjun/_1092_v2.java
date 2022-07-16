@@ -35,7 +35,7 @@ public class _1092_v2 {
         Arrays.sort(packages, Collections.reverseOrder());
 
         //max 크레인 < min packagek, max 크레인 < max 패키지
-        if (cranes[0]< packages[0]) {
+        if (cranes[0]< packages[0] ||cranes[0]< packages[m-1]) {
             System.out.println(-1);
         }else{
             int ans = 0;
